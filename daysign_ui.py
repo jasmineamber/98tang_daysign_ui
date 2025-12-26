@@ -107,6 +107,8 @@ def main(index):
         cookies.pop("cf_clearance")
         cookies["domain"] = HOST
 
+        print(cookies)
+
         # 2️⃣ 启动浏览器
         co = ChromiumOptions().set_browser_path(CHROME_PATH)
         co.headless()
@@ -119,6 +121,7 @@ def main(index):
 
         # 3️⃣ 设置cookies
         tab.get(f"https://{HOST}")
+        print(tab.title)
         tab.set.cookies(cookies)
 
         # 4️⃣ 获取帖子ID
