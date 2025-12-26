@@ -10,7 +10,7 @@ from DrissionPage import Chromium, ChromiumOptions
 
 HOST = os.getenv("SEHUATANG_HOST", "sehuatang.org")
 FID = os.getenv("SEHUATANG_FID", 103)
-NUM = os.getenv("SEHUATANG_ACCOUNTS_NUM", 1)
+NUM = int(os.getenv("SEHUATANG_ACCOUNTS_NUM", 1))
 REPLY_TIMES = os.getenv("SEHUATANG_REPLY_TIMES", 1)
 CHROME_PATH = os.getenv("SEHUATANG_CHROME_PATH", "/usr/bin/google-chrome")
 
@@ -107,12 +107,11 @@ def main(index):
         cookies.pop("cf_clearance")
         cookies["domain"] = HOST
 
-        print(cookies)
-
         # 2️⃣ 启动浏览器
         co = ChromiumOptions().set_browser_path(CHROME_PATH)
         co.headless()
         co.set_argument("--no-sandbox")
+        co.set_argument("--disable-gpu")
         # co.set_argument("--ozone-platform=wayland")
 
         tab = Chromium(co).latest_tab
@@ -121,7 +120,6 @@ def main(index):
 
         # 3️⃣ 设置cookies
         tab.get(f"https://{HOST}")
-        print(tab.title)
         tab.set.cookies(cookies)
 
         # 4️⃣ 获取帖子ID
@@ -176,7 +174,7 @@ def main(index):
 
 
 if __name__ == "__main__":
-    for i in range(int(NUM)):
+    for i in range(NUM):
         index = i + 1
         main(index)
         sleep_time = random.uniform(60 * 2, 60 * 5)
