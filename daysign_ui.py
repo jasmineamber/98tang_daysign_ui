@@ -173,7 +173,7 @@ def main(index):
 
 
 if __name__ == "__main__":
-    for i in range(NUM):
+    for i in range(int(NUM)):
         index = i + 1
         main(index)
         sleep_time = random.uniform(60 * 2, 60 * 5)
